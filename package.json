@@ -1,0 +1,19 @@
+{
+  "name": "test1",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "grok-sdk": "^0.0.1-security",
+    "groq-sdk": "^0.30.0",
+    "readline-sync": "^1.4.10"
+  }
+}
