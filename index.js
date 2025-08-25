@@ -6,7 +6,7 @@ import readlinesync from 'readline-sync'
 import Groq from "groq-sdk";
 const groq = new Groq({ apiKey: process.env.APIKEY });
 
-let context=[]
+let context=[] 
 
 
 async function main(qn) {
@@ -18,16 +18,21 @@ async function main(qn) {
         
         const completion = await groq.chat.completions
           .create({
+            
             messages:context,
             model: "openai/gpt-oss-20b",
           })
           .then((chatCompletion) => {
-            let response=chatCompletion.choices[0]?.message?.content
+            let response=chatCompletion.choices[0]?.message?.content || ""
             console.log(response || "");
-            context.push({
-                role:"assistant",
-                content:response
-            })
+            
+            if(response){
+                context.push({
+                    role:"assistant",
+                    content:response
+                })
+
+            }
 
             
           });
