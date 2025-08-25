@@ -32,13 +32,13 @@ async function main(qn) {
           type: "function",
           function: {
             name: "searchWeb",
-            description: "Search the web to answer the given question",
+            description: "Search the web using Tavily",
             parameters: {
               type: "object",
               properties: {
                 qn: {
                   type: "string",
-                  description: "The question which is asked by the user",
+                  description: "The search query",
                 },
               },
               required: ["qn"],
@@ -46,7 +46,7 @@ async function main(qn) {
           },
         },
       ],
-      tool_choice: "auto",
+      
     });
 
     let response = completion.choices[0]?.message?.content || "";
@@ -67,7 +67,7 @@ async function main(qn) {
                 tool_call_id: tool.id,
                 role: "tool",
                 name: functionName,
-                content: functionResponse ?  (typeof functionResponse ==="string" ? functionResponse : JSON.stringify(functionResponse) ) : "No result",
+                content: functionResponse ?  (typeof functionResponse ==="string" ? functionResponse : JSON.parse(functionResponse) ) : "No result",
             });
 
             

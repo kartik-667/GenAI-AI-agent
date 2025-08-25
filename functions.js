@@ -13,6 +13,8 @@ export const searchWeb=async ({qn})=>{
         const res=await tvly.search(qn)
         if(res.results && res.results.length > 0){
             let answer=res.results[0].content
+            console.log(answer);
+            
             return answer
         }
         // console.log();
@@ -31,4 +33,5 @@ export const availableFunctions={
     "searchWeb":searchWeb
 }
 
-// searchWeb("when was iphone 16 launched ?")
+searchWeb({qn:"whats the price of mac ultra apple"})
+// searchWeb({qn:"when was samsung s25 ultra launched ?"})
