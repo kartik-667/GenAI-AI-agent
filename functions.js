@@ -9,12 +9,18 @@ const tvly = tavily({ apiKey: api });
 
 export const searchWeb=async ({qn})=>{
     try {
+        // const res=await tvly.search({query : qn})
         const res=await tvly.search(qn)
-        console.log(res.results[0].content);
+        if(res.results && res.results.length > 0){
+            let answer=res.results[0].content
+            return answer
+        }
+        // console.log();
         
         
     } catch (error) {
         console.log('some error while websearch',error);
+        return "Web search failed"
         
     }
 

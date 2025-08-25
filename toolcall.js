@@ -56,6 +56,39 @@ async function main(qn) {
     let toolcall = responsemsg.tool_calls;
     if (toolcall) {
       console.log("** tool/function was called by LLM ** ");
+
+        for(const tool of toolcall){
+             const functionName = tool.function.name;
+            const functionToCall = availableFunctions[functionName];
+            const functionArgs = JSON.parse(tool.function.arguments);
+            const functionResponse = await functionToCall({qn:functionArgs.qn});
+
+            context.push({
+                tool_call_id: tool.id,
+                role: "tool",
+                name: functionName,
+                content: functionResponse ?  (typeof functionResponse ==="string" ? functionResponse : JSON.stringify(functionResponse) ) : "No result",
+            });
+
+            
+        const secondResponse = await groq.chat.completions.create({
+            model: "openai/gpt-oss-20b",
+            messages: context,
+        });
+
+        if(secondResponse){
+            const final_res=secondResponse.choices[0].message.content
+            console.log(final_res);
+
+            context.push({
+                role:"assistant",
+                content:final_res
+            })
+            
+            
+        }
+        }
+
     }else{
         //no toolcall so simply print response
         if (response) {
