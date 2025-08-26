@@ -11,12 +11,22 @@ export const searchWeb=async ({qn})=>{
     try {
         // const res=await tvly.search({query : qn})
         const res=await tvly.search(qn)
-        if(res.results && res.results.length > 0){
-            let answer=res.results[0].content
-            console.log(answer);
+        const allres=res.results
+
+        const final_res=allres.map((ele)=>{
+            return ele.content
+        }).join('\n\n')
+        // console.log(final_res);
+
+        return final_res;
+        
+        
+        // if(res.results && res.results.length > 0){
+        //     let answer=res.results[0].content
+        //     console.log(answer);
             
-            return answer
-        }
+        //     return answer
+        // }
         // console.log();
         
         
